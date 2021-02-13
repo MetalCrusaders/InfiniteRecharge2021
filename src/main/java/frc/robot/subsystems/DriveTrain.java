@@ -29,6 +29,7 @@ public class DriveTrain extends SubsystemBase {
   private final Gyro m_gyro;
 
   private final DifferentialDrive m_drive;
+  private final double kLeft = 1.1;
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -59,6 +60,21 @@ public class DriveTrain extends SubsystemBase {
     m_drive.arcadeDrive(speed, rotate);
   }
 
+  /**
+   * Tank style driving for the DriveTrain
+   * 
+   * @param left in range [-1.0, 1.0]
+   * @param right in range [-1.0, 1.0]
+   */
+  public void tankDrive(double left, double right) {
+    if(left > 0 && right > 0) {
+      m_drive.tankDrive(0.8 * left, 0.8 * kLeft * right);
+    }
+    else {
+      m_drive.tankDrive(0.8 * left, 0.8 * right);
+    }
+  }  
+
   /** Stops the drivetrain motors */
   public void stop() {
     m_drive.stopMotor();
@@ -77,6 +93,34 @@ public class DriveTrain extends SubsystemBase {
   public void resetGyro() {
     m_gyro.reset();
     m_gyro.calibrate();
+  }
+
+  /**
+   * turns the robot in place clockwise (TEST)
+   * @param degrees
+   */
+  public void turnClockwise(double degrees) {
+    double angleBefore = this.getHeading();
+    this.tankDrive(-1 * degrees / 360, degrees / 360);
+    double angleAfter = this.getHeading();
+
+    if (angleBefore - angleAfter != 90) {
+        System.out.print("you messed up");
+    }
+  }
+
+  /**
+   * turns the robot in place counterclockwise (TEST)
+   * @param degrees
+   */
+  public void turnCounterClockwise(double degrees) { 
+    double angleBefore = this.getHeading();
+    this.tankDrive(degrees / 360, -1 * degrees / 360);
+    double angleAfter = this.getHeading();
+
+    if (angleBefore - angleAfter != -90) {
+        System.out.print("you messed up");
+    }
   }
 
   /** Puts information in the SmartDashboard */
