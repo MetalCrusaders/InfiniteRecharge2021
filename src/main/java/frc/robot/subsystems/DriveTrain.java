@@ -30,6 +30,8 @@ public class DriveTrain extends SubsystemBase {
 
   private final DifferentialDrive m_drive;
 
+  private final double kLeft = 1.1;
+
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     leftMotor1 = new WPI_VictorSPX(Constants.DRIVE_LEFT_VICTORSPX0);
@@ -55,8 +57,23 @@ public class DriveTrain extends SubsystemBase {
    * @param speed in range [-1.0, 1.0]
    * @param rotate in range [-1.0, 1.0]. Clockwise is positive.
    */
-  public void set(double speed, double rotate) {
+  public void arcadeDrive(double speed, double rotate) {
     m_drive.arcadeDrive(speed, rotate);
+  }
+
+  /**
+   * Tank style driving for the DriveTrain
+   * 
+   * @param left in range [-1.0, 1.0]
+   * @param right in range [-1.0, 1.0]
+   */
+  public void tankDrive(double left, double right) {
+    if(left > 0 && right > 0) {
+      m_drive.tankDrive(0.8 * left, 0.8 * kLeft * right);
+    }
+    else {
+      m_drive.tankDrive(0.8 * left, 0.8 * right);
+    }
   }
 
   /** Stops the drivetrain motors */
