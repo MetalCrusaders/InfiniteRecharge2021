@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -18,13 +19,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class DriveTrain extends SubsystemBase {
 
+  private final WPI_VictorSPX leftMotor0;
   private final WPI_VictorSPX leftMotor1;
-  private final WPI_VictorSPX leftMotor2;
+  private final WPI_VictorSPX rightMotor0;
   private final WPI_VictorSPX rightMotor1;
-  private final WPI_VictorSPX rightMotor2;
 
   private final SpeedController m_left;
   private final SpeedController m_right;
+
+  private final Encoder m_encoder0;
+  private final Encoder m_encoder1;
 
   private final Gyro m_gyro;
 
@@ -34,13 +38,16 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    leftMotor1 = new WPI_VictorSPX(Constants.DRIVE_LEFT_VICTORSPX0);
-    leftMotor2 = new WPI_VictorSPX(Constants.DRIVE_LEFT_VICTORSPX1);
-    rightMotor1 = new WPI_VictorSPX(Constants.DRIVE_RIGHT_VICTORSPX0);
-    rightMotor2 = new WPI_VictorSPX(Constants.DRIVE_RIGHT_VICTORSPX1);
+    leftMotor0 = new WPI_VictorSPX(Constants.DRIVE_LEFT_VICTORSPX0);
+    leftMotor1 = new WPI_VictorSPX(Constants.DRIVE_LEFT_VICTORSPX1);
+    rightMotor0 = new WPI_VictorSPX(Constants.DRIVE_RIGHT_VICTORSPX0);
+    rightMotor1 = new WPI_VictorSPX(Constants.DRIVE_RIGHT_VICTORSPX1);
 
-    m_left = new SpeedControllerGroup(leftMotor1, leftMotor2);
-    m_right = new SpeedControllerGroup(rightMotor1, rightMotor2);
+    m_left = new SpeedControllerGroup(leftMotor0, leftMotor1);
+    m_right = new SpeedControllerGroup(rightMotor0, rightMotor1);
+
+    m_encoder0 = new Encoder(Constants.ENCODER_LEFT0, Constants.ENCODER_LEFT1);
+    m_encoder1 = new Encoder(Constants.ENCODER_RIGHT0, Constants.ENCODER_RIGHT1);
 
     m_gyro = new ADXRS450_Gyro();
 
@@ -87,7 +94,7 @@ public class DriveTrain extends SubsystemBase {
    * @return The robot's heading in degrees.
    */
   public double getHeading() {
-    return m_gyro.getAngle();
+    return m_gyro.getAngle() % 360;
   }
 
   /** Resets the gyro to a zero state */
@@ -96,11 +103,41 @@ public class DriveTrain extends SubsystemBase {
     m_gyro.calibrate();
   }
 
+  /** Returns the distance from the left encoder */
+  public double getLeftEncoderDistance() {
+    return m_encoder0.getDistance();
+  }
+
+  /** Returns the distance from the right encoder */
+  public double getRightEncoderDistance() {
+    return m_encoder1.getDistance();
+  }
+
+  /** Returns the current rate of the left encoder */
+  public double getLeftEncoderRate() {
+    return m_encoder0.getRate();
+  }
+
+  /** Returns the current rate of the right encoder */
+  public double getRightEncoderRate() {
+    return m_encoder1.getRate();
+  }
+
+  /** Resets the encoders to a zero state */
+  public void resetEncoders() {
+    m_encoder0.reset();
+    m_encoder1.reset();
+  }
+
   /** Puts information in the SmartDashboard */
   public void log() {
-    SmartDashboard.putNumber("Left Speed", m_left.get());
-    SmartDashboard.putNumber("Right Speed", m_right.get());
+    SmartDashboard.putNumber("Left Motor Output", m_left.get());
+    SmartDashboard.putNumber("Right Motor Output", m_right.get());
     SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+    SmartDashboard.putNumber("Left Encoder Distance", getLeftEncoderDistance());
+    SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
+    SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
+    SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
   }
 
   @Override

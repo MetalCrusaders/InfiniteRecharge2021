@@ -45,6 +45,7 @@ public class RobotContainer {
 
     // Show what command each subsystem is running on the SmartDashboard
     SmartDashboard.putData(m_driveTrain);
+    SmartDashboard.putData(m_indexer);
   }
 
   /** Set default commands for subsystems based on controller input*/
