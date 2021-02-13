@@ -4,13 +4,20 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  
+  VictorSP m_leftShooter;
+  VictorSP m_rightShooter;
+
   /** Creates a new ShooterSubsystem. */
-  public ShooterSubsystem() {}
+  public ShooterSubsystem() {
+    // m_leftShooter = new VictorSP(Constants.SHOOTER_LEFT0);
+    // m_rightShooter = new VictorSP(Constants.SHOOTER_RIGHT0);
+  }
 
   @Override
   public void periodic() {

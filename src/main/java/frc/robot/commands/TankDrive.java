@@ -4,35 +4,33 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
-public class AutoDrive extends CommandBase {
+public class TankDrive extends CommandBase {
 
   private final DriveTrain m_driveTrain;
-  private Timer time;
+  private final DoubleSupplier m_leftSpeed;
+  private final DoubleSupplier m_rightSpeed;
 
-  /** Creates a new AutoDrive. */
-  public AutoDrive(DriveTrain driveTrain) {
+  /** Creates a new TankDrive. */
+  public TankDrive(DoubleSupplier leftSpeed, DoubleSupplier rightSpeed, DriveTrain driveTrain) {
     m_driveTrain = driveTrain;
-    time = new Timer();
-
+    m_leftSpeed = leftSpeed;
+    m_rightSpeed = rightSpeed;
     addRequirements(m_driveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    time.start();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(time.get() < 4) {
-      m_driveTrain.tankDrive(0.5, 0.5);
-    }
+    m_driveTrain.tankDrive(m_leftSpeed.getAsDouble(), m_rightSpeed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

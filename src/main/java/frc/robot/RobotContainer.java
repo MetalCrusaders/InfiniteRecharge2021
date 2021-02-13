@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoDrive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IndexCommand;
+import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexSubsystem;
@@ -31,6 +33,7 @@ public class RobotContainer {
   private final XboxController m_controller = new XboxController(Constants.kController0);
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -46,9 +49,14 @@ public class RobotContainer {
 
   /** Set default commands for subsystems based on controller input*/
   private void setDefaultCommands() {
+    // m_driveTrain.setDefaultCommand(
+    //   new ArcadeDrive(
+    //     () -> m_controller.getY(Hand.kLeft), () -> m_controller.getX(Hand.kLeft), m_driveTrain)
+    // );
+
     m_driveTrain.setDefaultCommand(
-      new ArcadeDrive(
-        () -> m_controller.getY(Hand.kLeft), () -> m_controller.getX(Hand.kRight), m_driveTrain)
+      new TankDrive(
+        () -> m_controller.getY(Hand.kLeft), () -> m_controller.getY(Hand.kRight), m_driveTrain)
     );
 
     m_indexer.setDefaultCommand(
@@ -72,6 +80,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autoDrive;
   }
 }
