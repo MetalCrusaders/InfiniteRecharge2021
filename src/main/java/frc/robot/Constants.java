@@ -22,8 +22,7 @@ public final class Constants {
     public static final int DRIVE_RIGHT_VICTORSPX1 = 3;
 
     // PWM Motors
-    public static final int INDEX_MOTOR0 = 2;
-    public static final int INDEX_MOTOR1 = 3;
+    public static final int INDEX_MOTOR0 = 3;
     public static final int INTAKE_MOTOR = 4;
     public static final int SHOOTER_LEFT0 = 6;
     public static final int SHOOTER_RIGHT0 = 7;
@@ -35,8 +34,8 @@ public final class Constants {
     public static final int ENCODER_RIGHT1 = 3;
 
     // Solenoids
-    public static final int INTAKE_SOLENOID_DEPLOY = 0;
-    public static final int INTAKE_SOLENOID_RETRACT = 1;
+    public static final int INTAKE_SOLENOID_DEPLOY = 2;
+    public static final int INTAKE_SOLENOID_RETRACT = 3;
 
     // Controllers
     public static final int kController0 = 0;
