@@ -97,6 +97,15 @@ public class DriveTrain extends SubsystemBase {
     return m_gyro.getAngle() % 360;
   }
 
+  /**
+   * Gets the robot's turn rate
+   * 
+   * @return The robot's angular velocity in degrees / sec.
+   */
+  public double getGyroRate() {
+    return m_gyro.getRate();
+  }
+
   /** Resets the gyro to a zero state */
   public void resetGyro() {
     m_gyro.reset();
@@ -133,7 +142,8 @@ public class DriveTrain extends SubsystemBase {
   public void log() {
     SmartDashboard.putNumber("Left Motor Output", m_left.get());
     SmartDashboard.putNumber("Right Motor Output", m_right.get());
-    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+    SmartDashboard.putNumber("Heading", m_gyro.getAngle());
+    SmartDashboard.putNumber("Turn Rate", m_gyro.getRate());
     SmartDashboard.putNumber("Left Encoder Distance", getLeftEncoderDistance());
     SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
     SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
