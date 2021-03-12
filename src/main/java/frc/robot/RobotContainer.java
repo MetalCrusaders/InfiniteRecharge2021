@@ -13,7 +13,10 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePistons;
 // import frc.robot.commands.RotateDrive;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.ShooterPistons;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.ShootSpeeds.ShootHigh;
+import frc.robot.commands.ShootSpeeds.ShootLow;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.IndexSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -89,7 +92,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_controller1.xButton.whenHeld(new IntakePistons(m_intake));
+    m_controller1.yButton.whenHeld(new ShooterPistons(m_shooter));
     // m_controller1.aButton.whenHeld(new DriveStraight(m_driveTrain));
+    // m_controller1.yButton.whileHeld(new ShootHigh(m_shooter));
+    // m_controller1.bButton.whileHeld(new ShootLow(m_shooter));
   }
 
   /**

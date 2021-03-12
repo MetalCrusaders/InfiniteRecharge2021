@@ -5,38 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class RotateDrive extends CommandBase {
+public class ShooterPistons extends CommandBase {
 
-  private final DriveTrain m_driveTrain;
-  private final double m_angle;
+  private final ShooterSubsystem m_shooterSubsystem;
 
-  private static final double kP = 1;
+  /** Creates a new ShooterPistons. */
+  public ShooterPistons(ShooterSubsystem shooterSubsystem) {
+    m_shooterSubsystem = shooterSubsystem;
 
-  /** Creates a new RotateDrive. */
-  public RotateDrive(double angle, DriveTrain driveTrain) {
-    m_driveTrain = driveTrain;
-    m_angle = angle;
-
-    addRequirements(m_driveTrain);
+    addRequirements(m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_driveTrain.resetGyro();
+    m_shooterSubsystem.shooterPush();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    double error = m_angle - m_driveTrain.getHeading();
-    if (Math.abs(error) > 3) {
-      double turnValue = error * kP;
-      m_driveTrain.arcadeDrive(0, turnValue);
-    }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

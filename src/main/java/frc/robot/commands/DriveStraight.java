@@ -16,7 +16,7 @@ public class DriveStraight extends CommandBase {
 
   private static final double angleSetpoint = 0;
   private static final double MAX_STRAIGHT_SPEED = 0.75;
-  private static final double kP = 0.001;
+  private static final double kP = 0.01;
 
   /** Creates a new DriveStraight. */
   public DriveStraight(DoubleSupplier speed, DriveTrain driveTrain) {

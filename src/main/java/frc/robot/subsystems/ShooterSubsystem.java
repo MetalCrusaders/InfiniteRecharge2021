@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,13 +15,29 @@ public class ShooterSubsystem extends SubsystemBase {
 
   VictorSP m_leftShooter;
   VictorSP m_rightShooter;
+  private final DoubleSolenoid m_shooterPistons;
 
   private final double shooter_threshold = 0.2;
+  private boolean shooterIsIn = true;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
     m_leftShooter = new VictorSP(Constants.SHOOTER_LEFT0);
     m_rightShooter = new VictorSP(Constants.SHOOTER_RIGHT0);
+    m_shooterPistons = new DoubleSolenoid(
+      Constants.SHOOTER_SOLENOID_DEPLOY, 
+      Constants.SHOOTER_SOLENOID_RETRACT);
+  }
+
+  public void shooterPush() {
+    if(shooterIsIn) {
+      m_shooterPistons.set(Value.kForward);
+      shooterIsIn = false;
+    }
+    else {
+      m_shooterPistons.set(Value.kReverse);
+      shooterIsIn = true;
+    }
   }
 
   /**
