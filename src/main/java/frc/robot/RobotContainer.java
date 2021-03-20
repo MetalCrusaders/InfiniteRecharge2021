@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoDrive;
-import frc.robot.commands.DriveStraight;
+// import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePistons;
@@ -15,8 +15,8 @@ import frc.robot.commands.IntakePistons;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterPistons;
 import frc.robot.commands.TankDrive;
-import frc.robot.commands.ShootSpeeds.ShootHigh;
-import frc.robot.commands.ShootSpeeds.ShootLow;
+// import frc.robot.commands.ShootSpeeds.ShootHigh;
+// import frc.robot.commands.ShootSpeeds.ShootLow;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.IndexSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -61,10 +61,10 @@ public class RobotContainer {
   private void setDefaultCommands() {
 
     m_driveTrain.setDefaultCommand(
-      // new TankDrive(
-        // () -> m_controller0.getLeftStickY(), () -> m_controller0.getRightStickY(), m_driveTrain)
-      new DriveStraight(
-        () -> m_controller0.getLeftStickY(), m_driveTrain)
+      new TankDrive(
+        () -> m_controller0.getLeftStickY(), () -> m_controller0.getRightStickY(), m_driveTrain)
+      // new DriveStraight(
+      //   () -> m_controller0.getLeftStickY(), m_driveTrain)
     );
     
     m_intake.setDefaultCommand(
@@ -74,7 +74,7 @@ public class RobotContainer {
 
     m_indexer.setDefaultCommand(
       new IndexCommand(
-        () -> m_controller1.getLeftTrigger(), m_indexer)
+        () -> m_controller1.getLeftStickY(), m_indexer)
     );
 
     m_shooter.setDefaultCommand(

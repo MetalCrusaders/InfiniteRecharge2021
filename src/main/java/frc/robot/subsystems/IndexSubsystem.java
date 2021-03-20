@@ -23,7 +23,7 @@ public class IndexSubsystem extends SubsystemBase {
    * @param input in range [-1.0, 1.0]
    */
   public void set(double input) {
-    m_indexMotor.set(0.85 * input);
+    m_indexMotor.set(0.5 * input);
   }
 
   /** Stops the index motor */

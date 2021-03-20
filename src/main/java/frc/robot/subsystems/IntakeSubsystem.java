@@ -43,7 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
    */
   public void intake(double input) {
     if(input > 0.2) {
-      m_intakeMotor.set(-input); // Reverses direction of trigger input
+      m_intakeMotor.set(-input * 0.75); // Reverses direction of trigger input
     }
     else {
       stopIntake();

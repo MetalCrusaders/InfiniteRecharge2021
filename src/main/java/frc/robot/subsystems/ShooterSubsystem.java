@@ -19,6 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final double shooter_threshold = 0.2;
   private boolean shooterIsIn = true;
+  private final double limit = 0.75;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -47,8 +48,8 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void shoot(double input) {
     if (input > shooter_threshold) {
-      m_leftShooter.set(-input);
-      m_rightShooter.set(input);
+      m_leftShooter.set(-input * limit);
+      m_rightShooter.set(input * limit);
     }
     else {
       stop();
