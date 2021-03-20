@@ -7,11 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoDrive;
+import frc.robot.commands.DriveSequence;
 // import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePistons;
-// import frc.robot.commands.RotateDrive;
+import frc.robot.commands.RotateDrive;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterPistons;
 import frc.robot.commands.TankDrive;
@@ -39,8 +40,9 @@ public class RobotContainer {
   private final CrusaderController m_controller0 = new CrusaderController(Constants.kController0);
   private final CrusaderController m_controller1 = new CrusaderController(Constants.kController1);
 
-  private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
-  // private final RotateDrive m_rotateDrive = new RotateDrive(90, m_driveTrain);
+  // private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
+  // private final RotateDrive m_rotateDrive = new RotateDrive(m_driveTrain);
+  private final DriveSequence m_driveSequence = new DriveSequence(m_driveTrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -105,6 +107,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoDrive;
+    return m_driveSequence;
   }
 }

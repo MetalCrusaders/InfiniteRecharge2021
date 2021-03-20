@@ -28,10 +28,13 @@ public final class Constants {
     public static final int SHOOTER_RIGHT0 = 7;
 
     // Encoder ports
-    public static final int ENCODER_LEFT0 = 0;
-    public static final int ENCODER_LEFT1 = 1;
-    public static final int ENCODER_RIGHT0 = 2;
-    public static final int ENCODER_RIGHT1 = 3;
+    public static final int ENCODER_LEFT0 = 1;
+    public static final int ENCODER_LEFT1 = 2;
+    public static final int ENCODER_RIGHT0 = 5;
+    public static final int ENCODER_RIGHT1 = 6;
+
+    // Conversion values
+    public static final double ENCODER_TO_INCHES = 2048 / (6 * Math.PI);
 
     // Solenoids
     public static final int INTAKE_SOLENOID_DEPLOY = 2;

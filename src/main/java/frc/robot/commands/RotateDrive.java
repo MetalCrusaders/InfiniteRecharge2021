@@ -10,14 +10,17 @@ import frc.robot.subsystems.DriveTrain;
 public class RotateDrive extends CommandBase {
 
   private final DriveTrain m_driveTrain;
-  private final double m_angle;
+  private double kP = 0.02;
+  private double kTurn;
+  private double angle;
+  private double error;
 
-  private static final double kP = 1;
 
   /** Creates a new RotateDrive. */
-  public RotateDrive(double angle, DriveTrain driveTrain) {
+  public RotateDrive(DriveTrain driveTrain, double inAngle) {
     m_driveTrain = driveTrain;
-    m_angle = angle;
+    angle = inAngle;
+
 
     addRequirements(m_driveTrain);
   }
@@ -31,20 +34,25 @@ public class RotateDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double error = m_angle - m_driveTrain.getHeading();
-    if (Math.abs(error) > 3) {
-      double turnValue = error * kP;
-      m_driveTrain.arcadeDrive(0, turnValue);
-    }
+
+    error = Math.abs(m_driveTrain.getHeading() - angle);
+    kTurn = kP * error * Math.signum(angle);
+    m_driveTrain.tankDrive(-kTurn, kTurn);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_driveTrain.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Math.abs(error) < 3) {
+      return true;
+    }
     return false;
   }
 }

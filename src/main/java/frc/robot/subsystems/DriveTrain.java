@@ -49,6 +49,9 @@ public class DriveTrain extends SubsystemBase {
     m_encoder0 = new Encoder(Constants.ENCODER_LEFT0, Constants.ENCODER_LEFT1);
     m_encoder1 = new Encoder(Constants.ENCODER_RIGHT0, Constants.ENCODER_RIGHT1);
 
+    m_encoder0.setDistancePerPulse(1 / Constants.ENCODER_TO_INCHES);
+    m_encoder1.setDistancePerPulse(-1 / Constants.ENCODER_TO_INCHES);
+
     m_gyro = new ADXRS450_Gyro();
 
     m_drive = new DifferentialDrive(m_left, m_right);
@@ -85,7 +88,7 @@ public class DriveTrain extends SubsystemBase {
 
   /** Stops the drivetrain motors */
   public void stop() {
-    m_drive.stopMotor();
+    m_drive.tankDrive(0, 0);
   }
   
   /**
@@ -94,7 +97,7 @@ public class DriveTrain extends SubsystemBase {
    * @return The robot's heading in degrees.
    */
   public double getHeading() {
-    return m_gyro.getAngle() % 360;
+    return m_gyro.getAngle();
   }
 
   /**
@@ -109,7 +112,7 @@ public class DriveTrain extends SubsystemBase {
   /** Resets the gyro to a zero state */
   public void resetGyro() {
     m_gyro.reset();
-    m_gyro.calibrate();
+    // m_gyro.calibrate();
   }
 
   /** Returns the distance from the left encoder */
@@ -120,6 +123,10 @@ public class DriveTrain extends SubsystemBase {
   /** Returns the distance from the right encoder */
   public double getRightEncoderDistance() {
     return m_encoder1.getDistance();
+  }
+
+  public double getAverageEncoderDistance() {
+    return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
   }
 
   /** Returns the current rate of the left encoder */
