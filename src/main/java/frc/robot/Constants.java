@@ -34,6 +34,7 @@ public final class Constants {
     public static final int ENCODER_RIGHT1 = 6;
 
     // Conversion values
+    public static final double INCHES_TO_METERS = 0.0254;
     public static final double ENCODER_TO_INCHES = 2048 / (6 * Math.PI);
 
     // Solenoids

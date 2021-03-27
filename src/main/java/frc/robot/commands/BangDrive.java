@@ -4,41 +4,35 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
-public class DriveStraight extends CommandBase {
+public class BangDrive extends CommandBase {
 
   private final DriveTrain m_driveTrain;
-  private final DoubleSupplier m_speed;
+  private double distance;
+  private double speed;
 
-  private static final double angleSetpoint = 0;
-  private static final double MAX_STRAIGHT_SPEED = 0.75;
-  private static final double kP = 0.01;
-
-  /** Creates a new DriveStraight. */
-  public DriveStraight(DoubleSupplier speed, DriveTrain driveTrain) {
-    m_speed = speed;
+  /** Creates a new BangDrive. */
+  public BangDrive(DriveTrain driveTrain, double inDistance, double inSpeed) {
     m_driveTrain = driveTrain;
-
+    distance = inDistance;
+    speed = inSpeed;
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_driveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // m_driveTrain.resetGyro();
+    m_driveTrain.resetEncoders();
+    m_driveTrain.resetGyro();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = m_speed.getAsDouble() * MAX_STRAIGHT_SPEED;
-    double turnValue = kP * (angleSetpoint - m_driveTrain.getHeading());
-    turnValue = Math.copySign(turnValue, speed);
-    m_driveTrain.arcadeDrive(speed, turnValue);
+    m_driveTrain.tankDrive(speed, speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -48,6 +42,11 @@ public class DriveStraight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (m_driveTrain.getAverageEncoderDistance() > distance) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

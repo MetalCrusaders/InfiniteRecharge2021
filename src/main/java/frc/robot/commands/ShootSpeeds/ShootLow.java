@@ -10,7 +10,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootLow extends CommandBase {
 
   private final ShooterSubsystem m_shooterSubsystem;
-  private final double lowShootSpeed = 0; // Speed should remain constant after determining
+  private final double lowShootSpeed = 0.85; // Speed should remain constant after determining
 
   /** Creates a new ShootLow. */
   public ShootLow(ShooterSubsystem shooterSubsystem) {

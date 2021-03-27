@@ -20,17 +20,24 @@ public class DriveSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // Drives forward 54 inches (testing for coast)
-      new AutoDrive(m_driveTrain, 54),
-      
-      // Rotates 90 degrees ccw
-      new RotateDrive(m_driveTrain, -90),
+      // Drives forward 54 cm
+      new BangDrive(m_driveTrain, 0.2, 0.5),
 
-      // Drives forward 84 inches
-      new AutoDrive(m_driveTrain, 84),
+      // Rotates 90 degrees CCW
+      new CCWArc(m_driveTrain, 0.35, 0.7, 50),
+      
+      // Rotates 90 degrees CW
+      new CWArc(m_driveTrain, 0.8, 0.35, 9), // 11 goes straight
+
+      // // Drives forward 3.15 meters
+      new AutoDrive(m_driveTrain, 3.15),
 
       // Rotates 90 degrees cw
-      new RotateDrive(m_driveTrain, 90)
+      new CWArc(m_driveTrain, 0.8, 0.35, 50),
+
+      // Rotates 360 degrees CCW
+      new CCWArc(m_driveTrain, 0.35, 0.8, 230)
+      // new CCWArc(m_driveTrain, 0.35, 0.7, 155)
     );
   }
 }
