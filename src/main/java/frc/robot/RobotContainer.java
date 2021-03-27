@@ -4,15 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoDrive;
-import frc.robot.commands.DriveSequence;
+import frc.robot.commands.AutoSequences.*;
 // import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePistons;
-import frc.robot.commands.RotateDrive;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterPistons;
 import frc.robot.commands.TankDrive;
@@ -40,9 +39,11 @@ public class RobotContainer {
   private final CrusaderController m_controller0 = new CrusaderController(Constants.kController0);
   private final CrusaderController m_controller1 = new CrusaderController(Constants.kController1);
 
+  private final SlewRateLimiter m_speedLimiter = new SlewRateLimiter(3); // Limits joystick acceleration
+
   // private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
   // private final RotateDrive m_rotateDrive = new RotateDrive(m_driveTrain);
-  private final DriveSequence m_driveSequence = new DriveSequence(m_driveTrain);
+  private final AutoSlalom m_autoSlalom = new AutoSlalom(m_driveTrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -64,7 +65,8 @@ public class RobotContainer {
 
     m_driveTrain.setDefaultCommand(
       new TankDrive(
-        () -> -m_controller0.getLeftStickY(), () -> -m_controller0.getRightStickY(), m_driveTrain) // Inverted because XboxController reads upward joystick as negative
+        () -> -m_speedLimiter.calculate(m_controller0.getLeftStickY()), 
+        () -> -m_speedLimiter.calculate(m_controller0.getRightStickY()), m_driveTrain) // Inverted because XboxController reads upward joystick as negative
       // new DriveStraight(
       //   () -> m_controller0.getLeftStickY(), m_driveTrain)
     );
@@ -107,6 +109,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_driveSequence;
+    return m_autoSlalom;
   }
 }
