@@ -2,24 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
+package frc.robot.commands.ShootSpeeds;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class IntakeCommand extends CommandBase {
+public class ShootLow extends CommandBase {
 
-  private final IntakeSubsystem m_intakeSubsystem;
-  private final DoubleSupplier m_input;
+  private final ShooterSubsystem m_shooterSubsystem;
+  private final double lowShootSpeed = 0; // Speed should remain constant after determining
 
-  /** Creates a new IntakeCommand. */
-  public IntakeCommand(DoubleSupplier input, IntakeSubsystem intakeSubsystem) {
-    m_intakeSubsystem = intakeSubsystem;
-    m_input = input;
-    
-    addRequirements(m_intakeSubsystem);
+  /** Creates a new ShootLow. */
+  public ShootLow(ShooterSubsystem shooterSubsystem) {
+    m_shooterSubsystem = shooterSubsystem;
+
+    addRequirements(m_shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,14 +26,12 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.intake(m_input.getAsDouble());
+    m_shooterSubsystem.shoot(lowShootSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_intakeSubsystem.stopIntake();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

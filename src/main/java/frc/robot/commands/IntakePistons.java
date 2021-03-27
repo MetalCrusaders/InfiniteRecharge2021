@@ -4,39 +4,33 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeCommand extends CommandBase {
+public class IntakePistons extends CommandBase {
 
   private final IntakeSubsystem m_intakeSubsystem;
-  private final DoubleSupplier m_input;
 
-  /** Creates a new IntakeCommand. */
-  public IntakeCommand(DoubleSupplier input, IntakeSubsystem intakeSubsystem) {
+  /** Creates a new IntakePistons. */
+  public IntakePistons(IntakeSubsystem intakeSubsystem) {
     m_intakeSubsystem = intakeSubsystem;
-    m_input = input;
-    
+
     addRequirements(m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_intakeSubsystem.pistonPush();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_intakeSubsystem.intake(m_input.getAsDouble());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_intakeSubsystem.stopIntake();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

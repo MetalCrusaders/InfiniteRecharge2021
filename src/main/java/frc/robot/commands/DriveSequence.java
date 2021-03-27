@@ -10,14 +10,27 @@ import frc.robot.subsystems.DriveTrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PracticeSequence extends SequentialCommandGroup {
-  /** Creates a new PracticeSequence. */
-  public PracticeSequence(DriveTrain driveTrain) {
+public class DriveSequence extends SequentialCommandGroup {
+
+  private final DriveTrain m_driveTrain;
+  /** Creates a new DriveSequence. */
+  public DriveSequence(DriveTrain driveTrain) {
+
+    m_driveTrain = driveTrain;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoDrive(driveTrain),
-      new RotateDrive(180, driveTrain),
-      new AutoDrive(driveTrain));
+      // Drives forward 54 inches (testing for coast)
+      new AutoDrive(m_driveTrain, 54),
+      
+      // Rotates 90 degrees ccw
+      new RotateDrive(m_driveTrain, -90),
+
+      // Drives forward 84 inches
+      new AutoDrive(m_driveTrain, 84),
+
+      // Rotates 90 degrees cw
+      new RotateDrive(m_driveTrain, 90)
+    );
   }
 }

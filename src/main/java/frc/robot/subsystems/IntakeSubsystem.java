@@ -20,7 +20,9 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     m_intakeMotor = new Talon(Constants.INTAKE_MOTOR);
-    m_intakePistons = new DoubleSolenoid(0, 1);
+    m_intakePistons = new DoubleSolenoid(
+      Constants.INTAKE_SOLENOID_DEPLOY, 
+      Constants.INTAKE_SOLENOID_RETRACT);
   }
 
   /** Changes the current position of the piston */
@@ -36,12 +38,12 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   /** 
-   * Sets the intake motor to joystick speed
-   * @param input in range [-1.0, 1.0] 
+   * Sets the intake motor to trigger speed
+   * @param input in range [0.0, 1.0] 
    */
   public void intake(double input) {
     if(input > 0.2) {
-      m_intakeMotor.set(input);
+      m_intakeMotor.set(-input * 0.75); // Reverses direction of trigger input
     }
     else {
       stopIntake();
