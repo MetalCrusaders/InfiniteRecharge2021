@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoSequences.*;
+import frc.robot.commands.BarrelPath;
 // import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
@@ -44,6 +45,7 @@ public class RobotContainer {
   // private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
   // private final RotateDrive m_rotateDrive = new RotateDrive(m_driveTrain);
   private final AutoSlalom m_autoSlalom = new AutoSlalom(m_driveTrain);
+  private final BarrelPath m_barrelPath = new BarrelPath(m_driveTrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -109,6 +111,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoSlalom;
+    return m_barrelPath;
   }
 }
