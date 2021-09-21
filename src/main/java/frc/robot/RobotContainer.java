@@ -11,7 +11,6 @@ import frc.robot.commands.AutoSequences.*;
 // import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.IntakePistons;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterPistons;
 import frc.robot.commands.TankDrive;
@@ -96,7 +95,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_controller1.xButton.whenHeld(new IntakePistons(m_intake));
+    // m_controller1.xButton.whenHeld(new IntakePistons(m_intake));
     m_controller1.yButton.whenHeld(new ShooterPistons(m_shooter));
     // m_controller1.aButton.whenHeld(new DriveStraight(m_driveTrain));
     m_controller1.aButton.whileHeld(new ShootHigh(m_shooter));

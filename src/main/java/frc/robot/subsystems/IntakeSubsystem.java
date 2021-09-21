@@ -4,61 +4,36 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  private final Talon m_intakeMotor;
-  private final DoubleSolenoid m_intakePistons;
-  private boolean intakeIsIn = true;
+  private final VictorSP m_indexMotor;
 
-  /** Creates a new IntakeSubsystem. */
+  /** Creates a new Indexer. */
   public IntakeSubsystem() {
-    m_intakeMotor = new Talon(Constants.INTAKE_MOTOR);
-    m_intakePistons = new DoubleSolenoid(
-      Constants.INTAKE_SOLENOID_DEPLOY, 
-      Constants.INTAKE_SOLENOID_RETRACT);
-  }
-
-  /** Changes the current position of the piston */
-  public void pistonPush() {
-    if(intakeIsIn) {
-      m_intakePistons.set(Value.kForward);
-      intakeIsIn = false;
-    }
-    else {
-      m_intakePistons.set(Value.kReverse);
-      intakeIsIn = true;
-    }
+    m_indexMotor = new VictorSP(Constants.INTAKE_MOTOR);
   }
 
   /** 
-   * Sets the intake motor to trigger speed
-   * @param input in range [0.0, 1.0] 
+   * Sets the index motor to joystick speed
+   * @param input in range [-1.0, 1.0]
    */
-  public void intake(double input) {
-    if(input > 0.2) {
-      m_intakeMotor.set(-input * 0.75); // Reverses direction of trigger input
-    }
-    else {
-      stopIntake();
-    }
+  public void set(double input) {
+    m_indexMotor.set(0.85 * input); // 0.7 works for high speed
   }
 
-  /** Stops the intake motor */
-  public void stopIntake() {
-    m_intakeMotor.set(0);
+  /** Stops the index motor */
+  public void stop() {
+    m_indexMotor.stopMotor();
   }
 
   /** Puts info in the SmartDashboard */
   public void log() {
-    SmartDashboard.putBoolean("Intake is in", intakeIsIn);
-    SmartDashboard.putNumber("Intake motor", m_intakeMotor.get());
+    SmartDashboard.putNumber("Index motor", m_indexMotor.get());
   }
 
   @Override
