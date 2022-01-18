@@ -4,33 +4,47 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
-public class ArcadeDrive extends CommandBase {
+public class RotateDrive extends CommandBase {
 
   private final DriveTrain m_driveTrain;
-  private final DoubleSupplier m_speed;
-  private final DoubleSupplier m_rotate;
+  private double kP = 0.02;
+  private double kTurn;
+  private double angle;
+  private double error;
 
-  /** Creates a new ArcadeDrive. */
-  public ArcadeDrive(DoubleSupplier speed, DoubleSupplier rotate, DriveTrain driveTrain) {
+  private double MAX_ROTATE = 1;
+
+
+  /** Creates a new RotateDrive. */
+  public RotateDrive(DriveTrain driveTrain, double inAngle) {
     m_driveTrain = driveTrain;
-    m_speed = speed;
-    m_rotate = rotate;
+    angle = inAngle;
+
+
     addRequirements(m_driveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_driveTrain.resetGyro();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveTrain.arcadeDrive(m_speed.getAsDouble(), m_rotate.getAsDouble());
+
+    error = Math.abs(m_driveTrain.getHeading() - angle);
+    kTurn = kP * error;
+    if(kTurn > MAX_ROTATE) {
+      kTurn = MAX_ROTATE;
+    }
+    kTurn *= Math.signum(angle);
+    m_driveTrain.tankDrive(-kTurn, kTurn);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +56,9 @@ public class ArcadeDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Math.abs(error) < 3) {
+      return true;
+    }
     return false;
   }
 }

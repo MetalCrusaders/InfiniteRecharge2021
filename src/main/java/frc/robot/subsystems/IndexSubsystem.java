@@ -11,13 +11,11 @@ import frc.robot.Constants;
 
 public class IndexSubsystem extends SubsystemBase {
 
-  private final VictorSP m_leftIndexer;
-  private final VictorSP m_rightIndexer;
+  private final VictorSP m_indexMotor;
 
   /** Creates a new Indexer. */
   public IndexSubsystem() {
-    m_leftIndexer = new VictorSP(Constants.INDEX_MOTOR0);
-    m_rightIndexer = new VictorSP(Constants.INDEX_MOTOR1);
+    m_indexMotor = new VictorSP(Constants.INDEX_MOTOR0);
   }
 
   /** 
@@ -25,25 +23,17 @@ public class IndexSubsystem extends SubsystemBase {
    * @param input in range [-1.0, 1.0]
    */
   public void set(double input) {
-    if(input > 0.2) {
-      m_leftIndexer.set(-0.5 * input);
-      m_rightIndexer.set(0.5 * input);
-    }
-    else {
-      stop();
-    }
+    m_indexMotor.set(0.85 * input); // 0.7 works for high speed
   }
 
   /** Stops the index motor */
   public void stop() {
-    m_leftIndexer.stopMotor();
-    m_rightIndexer.stopMotor();
+    m_indexMotor.stopMotor();
   }
 
   /** Puts info in the SmartDashboard */
   public void log() {
-    SmartDashboard.putNumber("Left motor", m_leftIndexer.get());
-    SmartDashboard.putNumber("Right motor", m_rightIndexer.get());
+    SmartDashboard.putNumber("Index motor", m_indexMotor.get());
   }
 
   @Override

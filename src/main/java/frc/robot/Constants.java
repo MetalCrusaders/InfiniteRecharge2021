@@ -22,9 +22,26 @@ public final class Constants {
     public static final int DRIVE_RIGHT_VICTORSPX1 = 3;
 
     // PWM Motors
-    public static final int INDEX_MOTOR0 = 2;
-    public static final int INDEX_MOTOR1 = 3;
-    public static final int INTAKE_MOTOR = 4;
+    public static final int INDEX_MOTOR0 = 0;
+    public static final int INTAKE_MOTOR = 1;
+    public static final int SHOOTER_LEFT0 = 6;
+    public static final int SHOOTER_RIGHT0 = 7;
+
+    // Encoder ports
+    public static final int ENCODER_LEFT0 = 1;
+    public static final int ENCODER_LEFT1 = 2;
+    public static final int ENCODER_RIGHT0 = 5;
+    public static final int ENCODER_RIGHT1 = 6;
+
+    // Conversion values
+    public static final double INCHES_TO_METERS = 0.0254;
+    public static final double ENCODER_TO_INCHES = 2048 / (6 * Math.PI);
+
+    // Solenoids
+    public static final int INTAKE_SOLENOID_DEPLOY = 2;
+    public static final int INTAKE_SOLENOID_RETRACT = 3;
+    public static final int SHOOTER_SOLENOID_DEPLOY = 0;
+    public static final int SHOOTER_SOLENOID_RETRACT = 1;
 
     // Controllers
     public static final int kController0 = 0;
